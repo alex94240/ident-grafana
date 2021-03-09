@@ -16,14 +16,16 @@
    * @param id (optional)
    * @param expression (optional)
    * @param hide (optional)
+   * @param queryMode (default:`'Metrics'`)
+   * @param logGroupNames (optional)
 
    * @return Panel target
    */
 
   target(
     region,
-    namespace,
-    metric,
+    namespace=null,
+    metricName=null,
     datasource=null,
     statistic='Average',
     alias=null,
@@ -32,11 +34,13 @@
     dimensions={},
     id=null,
     expression=null,
-    hide=null
+    hide=null,
+    queryMode='Metrics',
+    logGroupNames=null
   ):: {
     region: region,
-    namespace: namespace,
-    metricName: metric,
+    [if namespace != null then 'namespace']: namespace,
+    [if metricName != null then 'metricName']: metricName,
     [if datasource != null then 'datasource']: datasource,
     statistics: [statistic],
     [if alias != null then 'alias']: alias,
@@ -46,6 +50,7 @@
     [if id != null then 'id']: id,
     [if expression != null then 'expression']: expression,
     [if hide != null then 'hide']: hide,
-
+    queryMode: queryMode,
+    [if logGroupNames != null then 'logGroupNames']: logGroupNames,
   },
 }
